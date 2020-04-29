@@ -1,11 +1,29 @@
 import { ApolloClient } from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
-// import { HttpLink } from "apollo-link-http";
+import { createHttpLink, HttpLink } from "apollo-link-http";
 import { withClientState } from "apollo-link-state";
 import { ApolloLink, Observable, Operation } from "apollo-link";
+import { setContext } from "apollo-link-context";
+import { onError } from "apollo-link-error";
+import { toast } from "react-toastify";
 
-const cache = new InMemoryCache();
+// const cache = new InMemoryCache();
+const httpLink = new HttpLink({
+  uri: "http://localhost:4001/graphql",
+});
 
+// const httpLink = createHttpLink({ uri: "http://localhost:3000/graphql" });
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  const token = localStorage.getItem("jwt");
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      "X-JWT": token ? `Bearer ${token}` : "",
+    },
+  };
+});
 const request = async (operation: Operation) => {
   operation.setContext({
     headers: {
@@ -13,6 +31,17 @@ const request = async (operation: Operation) => {
     },
   });
 };
+
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    graphQLErrors.map(({ message }) => {
+      toast.error(`Unexpected error: ${message}`);
+    });
+  }
+  if (networkError) {
+    toast.error(`Network error: ${networkError}`);
+  }
+});
 
 const requestLink = new ApolloLink(
   (operation, forward) =>
@@ -38,6 +67,11 @@ const requestLink = new ApolloLink(
 const client = new ApolloClient({
   link: ApolloLink.from([
     requestLink,
+    errorLink,
+    authLink,
+    // ApolloLink.split(
+    //   new HttpLink({ uri: mutationsUri }),
+    // ),
     withClientState({
       defaults: {
         auth: {
@@ -73,10 +107,12 @@ const client = new ApolloClient({
           },
         },
       },
-      cache,
+      cache: new InMemoryCache(),
     }),
+    httpLink,
   ]),
-  cache,
+
+  cache: new InMemoryCache(),
   resolvers: {},
   connectToDevTools: true,
 });

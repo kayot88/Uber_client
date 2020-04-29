@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { ApolloProvider } from "react-apollo";
-import client from "./apollo2";
+import client from "./apollo3";
 import App from "./Components/App";
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App />
+    <App /> 
   </ApolloProvider>,
   document.getElementById("root")
 );

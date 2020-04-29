@@ -1,13 +1,11 @@
 import ApolloClient, { Operation } from "apollo-boost";
 
-// import { createHttpLink } from "apollo-link-http";
-
 const client = new ApolloClient({
   clientState: {
     defaults: {
       auth: {
         __typename: "Auth",
-        isLoggedIn: Boolean(localStorage.getItem("jwt")),
+        isLoggedIn: Boolean(localStorage.getItem("jt")),
       },
     },
     resolvers: {
@@ -42,12 +40,12 @@ const client = new ApolloClient({
   request: async (operation: Operation) => {
     operation.setContext({
       header: {
-        "X-JWT": localStorage.getItem("jwt") || "",
+        "X-JWT": localStorage.getItem("jt"),
       },
     });
   },
-  uri: "http://localhost:3000/graphql",
-  connectToDevTools: true,
+  uri: "/graphql",
+  // connectToDevTools: true,
 });
 
 export default client;
