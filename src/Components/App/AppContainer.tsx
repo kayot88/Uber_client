@@ -8,8 +8,7 @@ import { IS_LOGGED_IN } from "./AppQueries";
 const AppContainer = ({ data }: any) => {
   return (
     <ThemeProvider theme={myTheme}>
-
-      <AppPresenter isLoggedIn={data.auth.isLoggedIn} />;
+      <AppPresenter isLoggedIn={data.auth.isLoggedIn} />
     </ThemeProvider>
   );
 };
