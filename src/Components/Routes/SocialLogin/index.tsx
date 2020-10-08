@@ -1,7 +1,4 @@
-import React from 'react';
+import SocialLoginContainer from "./SocialLoginContainer";
 
-export const SocialLogin = () => {
-  return <div>SocialLogin</div>;
-};
 
-// export const AddPlace;
+export default SocialLoginContainer;

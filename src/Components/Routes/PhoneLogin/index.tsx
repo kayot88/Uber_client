@@ -1,5 +1,3 @@
-import React from 'react';
+import PhoneLoginContainer from "./PhoneLoginContainer";
 
-export const PhoneLogin = () => {
-  return <div>PhoneLogin</div>;
-};
+export default PhoneLoginContainer;

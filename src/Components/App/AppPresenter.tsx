@@ -5,28 +5,31 @@ import { AddPlace } from "../Routes/AddPlace";
 import { EditAccount } from "../Routes/EditAccount";
 import { FindAddress } from "../Routes/FindAddress";
 import { Home } from "../Routes/Home";
-import OutHome from "../Routes/OutHome";
-import { PhoneLogin } from "../Routes/PhoneLogin";
+import Login from "../Routes/Loign";
+import PhoneLoginPresenter from "../Routes/PhoneLogin";
 import { Places } from "../Routes/Places";
 import { Ride } from "../Routes/Ride";
 import { Settings } from "../Routes/Settings";
-import { SocialLogin } from "../Routes/SocialLogin";
+import SocialLogin from "../Routes/SocialLogin";
 import { VerifyPhoneNumber } from "../Routes/VerifyPhoneNumber";
 
 interface IProps {
   isLoggedIn: boolean;
 }
 
-const AppPresenter: React.FC<IProps> = ({ isLoggedIn }) => (
-  <BrowserRouter>
-    {isLoggedIn ? <LoggedInRoutes /> : <LoggedOutRoutes />}
-  </BrowserRouter>
-);
+const AppPresenter: React.FC<IProps> = ({ isLoggedIn }) => {
+  console.log(isLoggedIn);
+  return (
+    <BrowserRouter>
+      {isLoggedIn ? <LoggedInRoutes /> : <LoggedOutRoutes />}
+    </BrowserRouter>
+  );
+};
 
 const LoggedOutRoutes: React.FC<any> = () => (
   <Switch>
-    <Route path={"/"} exact component={OutHome} />
-    <Route path={"/phone-login"} component={PhoneLogin} />
+    <Route path={"/"} exact component={Login} />
+    <Route path={"/phone-login"} component={PhoneLoginPresenter} />
     <Route
       path={"/verify-phone-number/:number"}
       component={VerifyPhoneNumber}
