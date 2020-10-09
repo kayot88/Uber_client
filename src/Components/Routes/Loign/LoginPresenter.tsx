@@ -92,11 +92,11 @@ const LoginPresenter: React.FC<IProps> = () => {
               +38 <Grey>Enter your mobie number</Grey>
             </FakeInput>
           </PhoneLogin>
-          <Link to={"/social-login"}>
-            <SocialLogin>
-              <SocialLink>Or connect with social link</SocialLink>
-            </SocialLogin>
-          </Link>
+        </Link>
+        <Link to={"/social-login"}>
+          <SocialLogin>
+            <SocialLink>Or connect with social link</SocialLink>
+          </SocialLogin>
         </Link>
       </Footer>
     </Container>

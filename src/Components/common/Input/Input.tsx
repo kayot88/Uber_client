@@ -15,9 +15,16 @@ const Container = styled.input`
     outline: none;
   }
 `;
-
-const Input: React.FC<any> = ({ placeholder }) => {
-  return <Container placeholder={placeholder} />;
+interface IProps {
+  placeholder?: string;
+  value: any;
+  name?: string;
+  onChange: (e: any) => any;
+}
+const Input: React.FC<IProps> = ({ placeholder = "enter number", value, name, onChange }) => {
+  return (
+    <Container placeholder={placeholder} value={value} name={name} onChange ={onChange}/>
+  );
 };
 
 export default Input;

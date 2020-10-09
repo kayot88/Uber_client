@@ -65,7 +65,21 @@ const CountrySelect = styled.select`
 
 const CountryOption = styled.option``;
 
-export const PhoneLoginPresenter = () => {
+interface Props {
+  countryCode: string;
+  phoneNumber?: string;
+  onChangeSelect: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+  onSubmit?: (event: React.FormEvent<HTMLFormElement>) => void;
+}
+
+export const PhoneLoginPresenter: React.FC<Props> = ({
+  countryCode,
+  phoneNumber,
+  onChangeSelect,
+  onSubmit,
+}) => {
   return (
     <Wrapper>
       <Container>
@@ -77,7 +91,11 @@ export const PhoneLoginPresenter = () => {
         <TextDiv>
           <div>Enter a phone number</div>
         </TextDiv>
-        <CountrySelect>
+        <CountrySelect
+          value={countryCode}
+          name={"countryCode"}
+          onChange={onChangeSelect}
+        >
           {countries.map((country, index) => (
             <CountryOption key={index} value={country.dial_code}>
               {country.flag}
@@ -85,9 +103,14 @@ export const PhoneLoginPresenter = () => {
             </CountryOption>
           ))}
         </CountrySelect>
-        <Form>
-          <Input placeholder={"095-452-46-35"} />
-          <Button>
+        <Form onSubmit={onSubmit}>
+          <Input
+            placeholder={"placeholder"}
+            value={phoneNumber}
+            name={"phoneNumber"}
+            onChange={onChangeSelect}
+          />
+          <Button type="submit" value="Submit">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
